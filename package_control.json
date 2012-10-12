@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "packages": [
+    {
+      "name": "Snipplr",
+      "description": "Upload/Download snippets from snipplr.com",
+      "author": "Johannes, Jonas Persson",
+      "homepage": "http://github.com/jonasdp/Snipplr",
+      "last_modified": "2012-10-12 00:19:27",
+      "platforms": {
+        "*": [
+          {
+            "version": "1.0",
+            "url": "https://github.com/jonasdp/Snipplr"
+          }
+        ]
+      }
+    }
+  ]
+}
