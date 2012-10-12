@@ -10,7 +10,7 @@ If you have the Package Control package installed, you can install Snipplr from 
 
 Go to your Sublime Text 2 Packages directory and clone the repository using the command below:
 
-git clone https://github.com/jonasdp/Snipplr.git Snipplr  
+git clone https://github.com/jonasdp/Snipplr/zipball/1.0.2 Snipplr  
 Don't forget to keep updating it, though!
 
 ### Without Git
@@ -21,7 +21,7 @@ Download the latest version from the tags page. Unzip to your Sublime Text Packa
 In order for package to work you need to insert your API-key from snipplr.com in the snipplr.sublime-settings file.
 
 `  
-{      
+{  
   "api_key": ""  
 }  
 `
