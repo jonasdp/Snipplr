@@ -3,15 +3,15 @@
   "packages": [
     {
       "name": "Snipplr",
-      "description": "Upload/Download snippets from snipplr.com",
+      "description": "Upload / Insert snippets from snipplr.com",
       "author": "Johannes, Jonas Persson",
-      "homepage": "http://github.com/jonasdp/Snipplr",
-      "last_modified": "2012-10-12 00:19:27",
+      "homepage": "http://www.xtreamit.se",
+      "last_modified": "2012-10-12 09:19:27",
       "platforms": {
         "*": [
           {
-            "version": "1.0",
-            "url": "https://github.com/jonasdp/Snipplr/tree/1.0.1"
+            "version": "1.0.2",
+            "url": "https://github.com/jonasdp/Snipplr/zipball/1.0.2"
           }
         ]
       }
