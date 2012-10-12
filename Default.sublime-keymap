@@ -1,0 +1,8 @@
+[
+  {
+    "keys": ["ctrl+alt+super+i"], "command": "snipplr_insert"
+  },
+  {
+    "keys": ["ctrl+alt+super+u"], "command": "snipplr_upload"
+  }
+]
