@@ -4,9 +4,11 @@ import HTMLParser
 from itertools import groupby
 from operator import itemgetter
 
-import sublime, sublime_plugin
+import sublime
+import sublime_plugin
 
 from utils import Worker, status, handle_thread
+
 
 def get_api_key():
     """Loads API key from settings."""
@@ -17,6 +19,7 @@ def get_api_key():
         sublime.error_message("No Snipplr API key found in settings")
 
     return api_key
+
 
 class SnipplrInsertCommand(sublime_plugin.TextCommand):
     """Search for snippet and insert it into document at cursor position."""
@@ -32,14 +35,15 @@ class SnipplrInsertCommand(sublime_plugin.TextCommand):
         self.snippet = None
 
     def keywords_prompt(self):
-        self.view.window().show_input_panel("Keywords:", "", self.search, None, None)
+        self.view.window(
+            ).show_input_panel("Keywords:", "", self.search, None, None)
 
     def search(self, keywords):
         t = Worker(lambda: self._search(keywords))
         t.start()
         self.threads['search'] = t
-        handle_thread(t, 'Searching Snipplr for: '+keywords, self.search_cb)
-    
+        handle_thread(t, 'Searching Snipplr for: ' +keywords, self.search_cb)
+
     def _search(self, keywords):
         try:
             return self.server.snippet.list(self.api_key, keywords)
@@ -78,7 +82,8 @@ class SnipplrInsertCommand(sublime_plugin.TextCommand):
             t = Worker(lambda: self.download(selection['id']))
             t.start()
             self.threads['download'] = t
-            handle_thread(t, 'Downloading snippet (%s)' % (selection['title'],),
+            handle_thread(
+                t, 'Downloading snippet (%s)' % (selection['title'],),
                           self.download_cb)
 
     def download(self, snippet_id):
@@ -110,6 +115,7 @@ class SnipplrInsertCommand(sublime_plugin.TextCommand):
             self.view.end_edit(edit)
             status('Snippet inserted')
 
+
 class SnipplrUploadCommand(sublime_plugin.TextCommand):
     """Upload currently selected text to Snipplr."""
 
@@ -138,8 +144,7 @@ class SnipplrUploadCommand(sublime_plugin.TextCommand):
         self.threads['get_languages'] = t
 
         self.title_prompt()
-            
-    
+
     def get_languages(self):
         try:
             return self.server.languages.list()
@@ -149,7 +154,7 @@ class SnipplrUploadCommand(sublime_plugin.TextCommand):
     def title_prompt(self):
         self.view.window().show_input_panel("Title:", "",
                                             self.title_cb, None, None)
-    
+
     def title_cb(self, title):
         self.snippet['title'] = title
         self.tags_prompt()
@@ -157,7 +162,7 @@ class SnipplrUploadCommand(sublime_plugin.TextCommand):
     def tags_prompt(self):
         self.view.window().show_input_panel("Tags (space delimited):", "",
                                             self.tags_cb, None, None)
-    
+
     def tags_cb(self, tags):
         self.snippet['tags'] = tags
 
@@ -182,12 +187,13 @@ class SnipplrUploadCommand(sublime_plugin.TextCommand):
             return f
 
         # Sort languages alphabetically, and put current view language first
-        self.language_list = sorted(self.languages.keys(), key=sort_key(view_language))
+        self.language_list = sorted(
+            self.languages.keys(), key=sort_key(view_language))
 
         status('Please select snippet language')
         languages = [self.languages[key] for key in self.language_list]
         self.view.window().show_quick_panel(languages, self.language_cb)
-    
+
     def language_cb(self, index):
         if index >= 0:
             self.snippet['language'] = self.language_list[index]
@@ -199,7 +205,8 @@ class SnipplrUploadCommand(sublime_plugin.TextCommand):
         snippet = self.snippet
         try:
             result = self.server.snippet.post(self.api_key, snippet['title'],
-                                              snippet['source'], snippet['tags'],
+                                              snippet[
+                                                  'source'], snippet['tags'],
                                               snippet['language'])
             if result['success'] == '1':
                 status('Snippet successfully uploaded', True)
