@@ -21,7 +21,7 @@ Download the latest version from the tags page. Unzip to your Sublime Text Packa
 In order for package to work you need to insert your API-key from snipplr.com in the snipplr.sublime-settings file.
 
 `  
-{      
+{  
   "api_key": ""  
 }  
 `
