@@ -1,4 +1,5 @@
 import os
+import threading
 from xmlrpclib import ServerProxy, Error
 import HTMLParser
 from itertools import groupby
@@ -35,14 +36,13 @@ class SnipplrInsertCommand(sublime_plugin.TextCommand):
         self.snippet = None
 
     def keywords_prompt(self):
-        self.view.window(
-            ).show_input_panel("Keywords:", "", self.search, None, None)
+        self.view.window().show_input_panel("Keywords:", "", self.search, None, None)
 
     def search(self, keywords):
         t = Worker(lambda: self._search(keywords))
         t.start()
         self.threads['search'] = t
-        handle_thread(t, 'Searching Snipplr for: ' +keywords, self.search_cb)
+        handle_thread(t, 'Searching Snipplr for: ' + keywords, self.search_cb)
 
     def _search(self, keywords):
         try:
@@ -82,8 +82,7 @@ class SnipplrInsertCommand(sublime_plugin.TextCommand):
             t = Worker(lambda: self.download(selection['id']))
             t.start()
             self.threads['download'] = t
-            handle_thread(
-                t, 'Downloading snippet (%s)' % (selection['title'],),
+            handle_thread(t, 'Downloading snippet (%s)' % (selection['title'],),
                           self.download_cb)
 
     def download(self, snippet_id):
@@ -187,8 +186,7 @@ class SnipplrUploadCommand(sublime_plugin.TextCommand):
             return f
 
         # Sort languages alphabetically, and put current view language first
-        self.language_list = sorted(
-            self.languages.keys(), key=sort_key(view_language))
+        self.language_list = sorted(self.languages.keys(), key=sort_key(view_language))
 
         status('Please select snippet language')
         languages = [self.languages[key] for key in self.language_list]
@@ -205,8 +203,7 @@ class SnipplrUploadCommand(sublime_plugin.TextCommand):
         snippet = self.snippet
         try:
             result = self.server.snippet.post(self.api_key, snippet['title'],
-                                              snippet[
-                                                  'source'], snippet['tags'],
+                                              snippet['source'], snippet['tags'],
                                               snippet['language'])
             if result['success'] == '1':
                 status('Snippet successfully uploaded', True)
